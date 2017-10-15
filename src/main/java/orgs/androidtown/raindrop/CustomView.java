@@ -16,6 +16,7 @@ import java.util.List;
 public class CustomView extends View {
     Paint paint;
     List<RainDrop> rainDrops = new ArrayList<>();
+
     public CustomView(Context context) {
         super(context);
         // 색지정
@@ -40,16 +41,17 @@ public class CustomView extends View {
     }
 
     public void addRainDrop(RainDrop rainDrop){
-        this.rainDrops.add(rainDrop);
+
+        this.rainDrops.add(rainDrop); // this의 의미?
     }
 
     public void runStage(){
         new Thread(){
             public void run(){
-                while(MainActivity.runFlag){
+                while(MainActivity.runFlag){// 객체당 생명주기 함수가 있어서, 하나하나 다 지워주는 것인가?
                     // 반복문을 돌면서 전체 오브젝트의 좌표값을 갱신해준다
                     for(int i=0;i<rainDrops.size();i++) {
-                        if(rainDrops.get(i).y > rainDrops.get(i).limit) {
+                        if(rainDrops.get(i).y > rainDrops.get(i).limit) { // i값들이 커지면 액티비티 상에서 떨어지는 효과가 있다?
                             rainDrops.remove(i);
                             i--;
                         } else {
