@@ -40,19 +40,20 @@ public class CustomView extends View {
         }
     }
 
-    public void addRainDrop(RainDrop rainDrop){
+    public void addRainDrop(RainDrop rainDrop){ // MainActivity에 쓰레드가 실행되는 한 계속 이쪽으로 RainDrop 객체가 들어와
+        // ArrayList에 추가된다.
 
-        this.rainDrops.add(rainDrop); // this의 의미?
+        this.rainDrops.add(rainDrop);
     }
 
     public void runStage(){
         new Thread(){
             public void run(){
-                while(MainActivity.runFlag){// 객체당 생명주기 함수가 있어서, 하나하나 다 지워주는 것인가?
+                while(MainActivity.runFlag){//MainThread의 runFlag값과 동일하게 갱신이 되야 하기에...
                     // 반복문을 돌면서 전체 오브젝트의 좌표값을 갱신해준다
                     for(int i=0;i<rainDrops.size();i++) {
-                        if(rainDrops.get(i).y > rainDrops.get(i).limit) { // i값들이 커지면 액티비티 상에서 떨어지는 효과가 있다?
-                            rainDrops.remove(i);
+                        if(rainDrops.get(i).y > rainDrops.get(i).limit) { // 모델 객체의 높이값이 limit보다 크면 지운다. 이는 곧 빗방울이
+                            rainDrops.remove(i);                          // 화면에서 사라지는 것을 구현하는 것.
                             i--;
                         } else {
                             rainDrops.get(i).y += rainDrops.get(i).speed;
